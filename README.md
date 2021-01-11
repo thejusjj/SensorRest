@@ -1,7 +1,7 @@
 # SensorRest
 ## Simple Sample API for Sensor Data Management
-## Tech Stack : Spring Boot, Spring JDBC, MySQL
-## Design Principles: Simplified Layered architecture, Normalised Datastore, No-verb apis, Fine-grained data access with JDBC. 
+### Tech Stack : Spring Boot, Spring JDBC, MySQL
+### Design Principles: Simplified Layered architecture, Normalised Datastore, No-verb apis, Fine-grained data access with JDBC. 
 
 **To Run**
 **mvn clean install** or **mvnw clean install**
