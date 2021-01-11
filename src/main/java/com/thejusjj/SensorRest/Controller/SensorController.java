@@ -12,61 +12,61 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.thejusjj.SensorRest.Repository.City;
-import com.thejusjj.SensorRest.Repository.CityRepository;
-import com.thejusjj.SensorRest.Repository.District;
-import com.thejusjj.SensorRest.Repository.DistrictRepository;
-import com.thejusjj.SensorRest.Repository.SensorData;
-import com.thejusjj.SensorRest.Repository.SensorDataRepository;
-import com.thejusjj.SensorRest.Repository.SensorLocation;
-import com.thejusjj.SensorRest.Repository.SensorLocationRepository;
+import com.thejusjj.SensorRest.Entity.City;
+import com.thejusjj.SensorRest.Entity.District;
+import com.thejusjj.SensorRest.Entity.SensorData;
+import com.thejusjj.SensorRest.Entity.SensorLocation;
+import com.thejusjj.SensorRest.Service.ICityService;
+import com.thejusjj.SensorRest.Service.IDistrictService;
+import com.thejusjj.SensorRest.Service.ISensorDataService;
+import com.thejusjj.SensorRest.Service.ISensorLocationService;
 
 @Validated
 @RestController
 public class SensorController {
 	
-	@Autowired 
-	CityRepository cityRepository;
+	@Autowired
+	private ICityService cityService;
 
 	@Autowired
-	private DistrictRepository districtRepository;
+	private IDistrictService districtService;
 	
 	@Autowired
-	private SensorLocationRepository sensorLocationRepository;
+	private ISensorLocationService sensorLocationService;
 	
 	@Autowired
-	private SensorDataRepository sensorDataRepository;
+	private ISensorDataService sensorDataService;
 
 	@RequestMapping(value="/v1/cities",method = RequestMethod.GET)
 	public List<City> getAllCities(){
-		return cityRepository.findCities();
+		return cityService.findAllCities();
 	}
 	
 	@RequestMapping(value="/v1/cities/{city_id}/districts",method = RequestMethod.GET)
 	public List<District> getDistrictsInCity(String cityId){
-		return districtRepository.findDistricts(cityId);
+		return districtService.findDistricts(cityId);
 	}
 	
 	@RequestMapping(value="/v1/sensors",method = RequestMethod.POST)
 	public List<City> createNewSensor(String sensorId,Float data){
 		//to change
-		return cityRepository.findCities();
+		return cityService.findAllCities();
 	}
 	
 	@RequestMapping(value="/v1/sensors",method = RequestMethod.GET)
 	public List<SensorLocation> getSensor(String districtId,String cityId){
-		return sensorLocationRepository.findAllSensors(districtId, cityId);
+		return sensorLocationService.findAllSensors(districtId, cityId);
 	}
 	
 	
 	@RequestMapping(value="/v1/sensordata",method = RequestMethod.POST)
 	public int createNewSensorData(String sensorId,Double dataValue){
-		return sensorDataRepository.createNewSensorData(sensorId,dataValue);
+		return sensorDataService.createNewSensorData(sensorId,dataValue);
 	}
 	
 	@RequestMapping(value="/v1/sensordata",method = RequestMethod.GET)
-	public List<SensorData> getSensorData(@NotNull @NotBlank String cityId,String districtId,Integer daySpan ,Date fromDate, Date tillDate){
-		return sensorDataRepository.findAllSensorData(cityId,districtId,daySpan,fromDate, tillDate);
+	public List<SensorData> getSensorData(String cityId,String districtId,Integer daySpan ,Date fromDate, Date tillDate){
+		return sensorDataService.findAllSensorData(cityId,districtId,daySpan,fromDate, tillDate);
 	}
 	
 

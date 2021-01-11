@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.thejusjj.SensorRest.Entity.City;
+import com.thejusjj.SensorRest.Entity.CityRowMapper;
+
 @Repository
 public class CityRepository {
 
@@ -19,22 +22,11 @@ public class CityRepository {
 		return jdbcTemplate.update("insert into city(city_id,city_name) values(?,?)",UUID.randomUUID().toString(),city.getCityName());
 	}
 
-	public List<City> findCities(){
-
+	public List<City> findAll(){
 		String sql = "select * from city";
 
-//		List<City> cities = new ArrayList<City>();
-
-		List<City> cities = jdbcTemplate.query(
+		return jdbcTemplate.query(
 				sql,
 				new CityRowMapper());
-
-
-//		try {
-//			jdbcTemplate.queryForList(sql).forEach(row -> cities.add(new City((String)row.get("city_id"),(String)row.get("city_name"))));;
-//		}catch(Exception ex) {
-//			ex.printStackTrace();
-//		}
-		return cities;
 	}
 }
